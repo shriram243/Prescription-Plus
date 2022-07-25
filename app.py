@@ -8,12 +8,27 @@ from Routes.DoctorRoute import router as DoctorRouter
 from Routes.PatientRoute import router as PatientRouter
 from Routes.PrescriptionRoute import router as PrescriptionRouter
 from Routes.ElasticSearchRoute import router as ElasticSearchRouter
-
+from fastapi.middleware.cors import CORSMiddleware
 
 
 app = FastAPI()
 
+# origins = [
+#     "http://localhost:8081",
+#     "http://localhost:8080",
+#     "http://localhost:9988",
+# ]
+
+# app.add_middleware(
+#     CORSMiddleware,
+#     allow_origins=origins,
+#     allow_credentials=True,
+#     allow_methods=["*"],
+#     allow_headers=["*"],
+# )
+
 token_listener = JWTBearer()
+
 
 @app.on_event("startup")
 async def start_database():
@@ -26,7 +41,8 @@ async def read_root():
 
 
 app.include_router(AdminRouter, tags=["Administrator"], prefix="/admin")
-app.include_router(DoctorRouter,tags=["Administrator"], prefix="/doctor")
-app.include_router(PatientRouter,tags=["Administrator"], prefix="/patient")
-app.include_router(PrescriptionRouter,tags=["Administrator"], prefix="/rx")
-app.include_router(ElasticSearchRouter,tags=['Administrator'],prefix="/search")
+app.include_router(DoctorRouter, tags=["Administrator"], prefix="/doctor")
+app.include_router(PatientRouter, tags=["Administrator"], prefix="/patient")
+app.include_router(PrescriptionRouter, tags=["Administrator"], prefix="/rx")
+app.include_router(ElasticSearchRouter, tags=[
+                   'Administrator'], prefix="/search")
