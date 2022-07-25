@@ -82,6 +82,19 @@ class Prescription(Document):
     updated:Optional[datetime]
 
 
+class UpdatePrescriptionModel(BaseModel):
+    doctor_details:Optional[DoctorDetails]
+    patient_details:Optional[PatientDetails]
+    complaints:Optional[list[ComplaintsDetails]]
+    medicine:Optional[list[MedicineDetails]]
+    advice:Optional[str]
+    labtest:Optional[list[LabTestDetails]]
+    follow_up_date:Optional[FollowUpDateDetails]
+    pdf:Optional[str]
+    picture:Optional[str]
+    updated:Optional[datetime]
+
+
 class Response(BaseModel):
     status_code: int
     response_type: str

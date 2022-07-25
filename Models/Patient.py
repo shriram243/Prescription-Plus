@@ -14,7 +14,7 @@ class AddressDetails(BaseModel):
 
 class Patient(Document):
     firstname: str
-    lastname:str
+    lastname:Optional[str]
     email: EmailStr
     mobile: str = Query(..., regex=const.PHONE_NO_REGEX)
     whatsapp:Optional[str]
@@ -23,6 +23,17 @@ class Patient(Document):
     sex:str
     age:int
     created:Optional[datetime]
+    updated:Optional[datetime]
+
+class UpdatePatientModel(BaseModel):
+    firstname: Optional[str]
+    lastname:Optional[str]
+    email: Optional[EmailStr]
+    mobile: Optional[str]= Query(..., regex=const.PHONE_NO_REGEX)
+    whatsapp:Optional[str]
+    address:Optional[AddressDetails]
+    sex:Optional[str]
+    age:Optional[int]
     updated:Optional[datetime]
 
 

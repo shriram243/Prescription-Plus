@@ -17,3 +17,34 @@ async def addPatient(patient: Patient) -> Patient:
     patient.Id ="Pat"+str(ts)
     doc = await patient.create()
     return doc
+
+async def findPatientbyId(Id)->Patient:
+    try:
+        rx = await patient_collection.find_one({'Id':Id})
+    except:
+        return "Error Occur"
+    return rx
+
+async def findPatientby_Id(_id)->Patient:
+    try:
+        rx = await patient_collection.get(_id)
+    except:
+        return "Error Occur"
+    return rx
+
+async def UpdatePatient(id,data:dict)->Union[bool, Patient]:
+    try:
+        data['updated'] = datetime.datetime.now()
+        des_body = {k: v for k, v in data.items() if v is not None}
+        update_query = {"$set": {
+            field: value for field, value in des_body.items()
+        }}
+        patient = await patient_collection.get(id)
+        print(patient)
+        if patient:
+            await patient.update(update_query)
+            return patient
+        else:
+            return False
+    except:
+        return False
