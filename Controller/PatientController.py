@@ -10,13 +10,16 @@ patient_collection = Patient
 
 
 async def addPatient(patient: Patient) -> Patient:
-    patient.created = datetime.datetime.now()
-    patient.updated=datetime.datetime.now()
-    ts = datetime.datetime.now().timestamp()
-    ts = round(ts)
-    patient.Id ="Pat"+str(ts)
-    doc = await patient.create()
-    return doc
+    try:
+        patient.created = datetime.datetime.now()
+        patient.updated=datetime.datetime.now()
+        ts = datetime.datetime.now().timestamp()
+        ts = round(ts)
+        patient.Id ="Pat"+str(ts)
+        doc = await patient.create()
+        return doc
+    except:
+        return False
 
 async def findPatientbyId(Id)->Patient:
     try:

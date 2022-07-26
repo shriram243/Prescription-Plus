@@ -1,10 +1,11 @@
 from datetime import datetime
+from enum import unique
 from typing import Optional, Any
 
 from beanie import Document
 from fastapi import Query
 from Constants import constants as const
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, Field
 
 class AddressDetails(BaseModel):
     locality:str

@@ -12,18 +12,19 @@ medicine_collection = Medicine
 
 
 async def addRx(prescription: Prescription) -> Prescription:
-    prescription.created = datetime.datetime.now()
-    prescription.updated=datetime.datetime.now()
-    ts = datetime.datetime.now().timestamp()
-    ts = round(ts)
-    prescription.Id ="Rx"+str(ts)
-    doc = await prescription.create()
-    docID = prescription.doctor_details.Id
-    # med = await medicine_collection.find_one({docID})
-    # if(med):
-
-
-    return doc
+    try:
+        prescription.created = datetime.datetime.now()
+        prescription.updated=datetime.datetime.now()
+        ts = datetime.datetime.now().timestamp()
+        ts = round(ts)
+        prescription.Id ="Rx"+str(ts)
+        doc = await prescription.create()
+        docID = prescription.doctor_details.Id
+        # med = await medicine_collection.find_one({docID})
+        # if(med):
+        return doc
+    except:
+        return False
 
 async def findRxbyId(Id)->Prescription:
     try:

@@ -11,12 +11,20 @@ router = APIRouter()
 async def addDoctorRoute(doctor: Doctor = Body(...)):
     print("check")
     new_doc = await addDoctor(doctor)
-    return {
-        "status_code": 200,
-        "response_type": "success",
-        "description": "Doctor created successfully",
-        "data": new_doc
-    }
+    if new_doc:
+        return {
+            "status_code": 200,
+            "response_type": "success",
+            "description": "Doctor created successfully",
+            "data": new_doc
+        }
+    else:
+        return {
+            "status_code": 404,
+            "response_type": "error",
+            "description": "Unable to add to DB",
+            "data": False
+            }
 
 
 @router.get('/', response_description="Doctor Details fetched Successfully", response_model=Response)

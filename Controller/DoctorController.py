@@ -1,4 +1,5 @@
 import imp
+import re
 from typing import List, Union
 # from datetime import datetime
 import datetime
@@ -10,13 +11,16 @@ doctor_collection = Doctor
 
 
 async def addDoctor(doctor: Doctor) -> Doctor:
-    doctor.created = datetime.datetime.now()
-    doctor.updated=datetime.datetime.now()
-    ts = datetime.datetime.now().timestamp()
-    ts = round(ts)
-    doctor.Id ="Doc"+str(ts)
-    doc = await doctor.create()
-    return doc
+    try:
+        doctor.created = datetime.datetime.now()
+        doctor.updated=datetime.datetime.now()
+        ts = datetime.datetime.now().timestamp()
+        ts = round(ts)
+        doctor.Id ="Doc"+str(ts)
+        doc = await doctor.create()
+        return doc
+    except:
+        return False 
 
 async def findDocbyId(Id)->Doctor:
     try:
