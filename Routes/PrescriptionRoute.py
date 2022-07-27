@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Body
-
+import os
+from fastapi.responses import FileResponse
 from database.database import *
 from Models.Prescription import *
 from Controller.PrescriptionController import *
@@ -134,3 +135,36 @@ async def UpdateRxRoute(id: PydanticObjectId, rx: UpdatePrescriptionModel = Body
         "description": "An error occurred. Rx with ID: {} not found".format(id),
         "data": False
     }
+
+@router.get("/pdf/",response_model=Response)
+async def GenerateRxPdfRoute(id:PydanticObjectId):
+    print("--------pdf----------",id)
+    rxPdf = await generateRxPdf(id)
+    if rxPdf:
+        return {
+            "status_code": 200,
+            "response_type": "success",
+            "description": "pdf Generated Successfully",
+            "data": rxPdf
+        }
+    else:
+        return {
+            "status_code": 404,
+            "response_type": "error",
+            "description": "An error occurred. Rx with ID: {} not found".format(id),
+            "data": False
+            }
+
+@router.get("/getpdf/",response_model=Response)
+async def GetRxPdfRoute(id:PydanticObjectId):
+    rx = str(id)+".pdf"
+    file_path = os.path.join("./Rx/",rx)
+    if os.path.exists(file_path):
+        return FileResponse("./Rx/"+rx)
+    else:
+        return {
+            "status_code": 404,
+            "response_type": "error",
+            "description": "An error occurred. Rx with ID:{} not found".format(id),
+            "data": False
+            }
