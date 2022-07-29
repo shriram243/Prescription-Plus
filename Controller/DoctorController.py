@@ -29,12 +29,12 @@ async def findDocbyId(Id)->Doctor:
         return "Error Occur"
     return rx
 
-async def findDocby_Id(_id)->Doctor:
+async def findDocby_Id(_id:PydanticObjectId)->Doctor:
     try:
         rx = await doctor_collection.get(_id)
+        return rx
     except:
         return "Error Occur"
-    return rx
 
 async def UpdateDoc(id,data:dict)->Union[bool, Doctor]:
     try:

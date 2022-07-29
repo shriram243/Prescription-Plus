@@ -15,13 +15,13 @@ class AddressDetails(BaseModel):
 class Patient(Document):
     firstname: str
     lastname:Optional[str]
-    email: EmailStr
+    email: Optional[EmailStr]
     mobile: str = Query(..., regex=const.PHONE_NO_REGEX)
     whatsapp:Optional[str]
     Id:Optional[str]
     address:Optional[AddressDetails]
-    sex:str
-    age:int
+    sex:Optional[str]
+    age:Optional[int]
     created:Optional[datetime]
     updated:Optional[datetime]
 

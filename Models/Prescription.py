@@ -7,10 +7,10 @@ from Constants import constants as const
 from pydantic import BaseModel, EmailStr
 
 class AddressDetails(BaseModel):
-    locality:str
-    city:str
-    pincode:int
-    state:str
+    locality:Optional[str]
+    city:Optional[str]
+    pincode:Optional[int]
+    state:Optional[str]
 
 class CouncilDetails(BaseModel):
     state:str
@@ -23,14 +23,14 @@ class DoctorDetails(BaseModel):
     degree:str
     council:Optional[CouncilDetails]
     mobile:str = Query(..., regex=const.PHONE_NO_REGEX)
-    signature:str
+    signature:Optional[str]
     address:Optional[AddressDetails]
 
 class PatientDetails(BaseModel):
     firstname:str
     lastname:Optional[str]
     Id:str
-    unique_health_id:str
+    unique_health_id:Optional[str]
     mobile:str = Query(..., regex=const.PHONE_NO_REGEX)
     address:Optional[AddressDetails]
     sex:Optional[str]
@@ -44,28 +44,28 @@ class ComplaintsDetails(BaseModel):
     additional_info:Optional[str]
 
 class DurationDetails(BaseModel):
-    frequency:int
-    type:str
+    frequency:Optional[int]
+    type:Optional[str]
 
 class MedicineDetails(BaseModel):
     term:str
     sctid:Optional[str]
     fkid:Optional[str]
-    dosage:str
+    dosage:Optional[str]
     duration:Optional[DurationDetails]
-    when:str
-    quantity:str
+    when:Optional[str]
+    quantity:Optional[str]
     additional_info:Optional[str]
 
 class LabTestDetails(BaseModel):
-    term:str
-    id:str
+    term:Optional[str]
+    id:Optional[str]
     additional_info:Optional[str]
 
 class FollowUpDateDetails(BaseModel):
-    next:int
-    type:str
-    date:str
+    next:Optional[int]
+    type:Optional[str]
+    date:Optional[str]
 
 class Prescription(Document):
     doctor_details:Optional[DoctorDetails]

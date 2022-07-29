@@ -8,6 +8,7 @@ from Constants import constants as const
 from pydantic import BaseModel, EmailStr, Field
 
 class AddressDetails(BaseModel):
+    name:Optional[str]
     locality:str
     city:str
     pincode:int
@@ -20,18 +21,18 @@ class CouncilDetails(BaseModel):
 class Doctor(Document):
     firstname: str
     lastname:Optional[str]
-    email: EmailStr
+    email: Optional[EmailStr]
     mobile: str = Query(..., regex=const.PHONE_NO_REGEX)
-    mci: str
-    degree: str
-    signature:str
+    mci: Optional[str]
+    degree: Optional[str]
+    signature:Optional[str]
     Id:Optional[str]
     council:Optional[CouncilDetails]
-    visitingCard:str
+    visitingCard:Optional[str]
     documents:Optional[list[str]]
     address:Optional[AddressDetails]
-    sex:str
-    age:int
+    sex:Optional[str]
+    age:Optional[int]
     created:Optional[datetime]
     updated:Optional[datetime]
 
