@@ -1,8 +1,8 @@
-import imp
 from typing import List, Union
 # from datetime import datetime
 import datetime
 from beanie import PydanticObjectId
+from fastapi import File
 
 from Models.Patient import Patient
 
@@ -10,13 +10,16 @@ patient_collection = Patient
 
 
 async def addPatient(patient: Patient) -> Patient:
-    patient.created = datetime.datetime.now()
-    patient.updated=datetime.datetime.now()
-    ts = datetime.datetime.now().timestamp()
-    ts = round(ts)
-    patient.Id ="Pat"+str(ts)
-    doc = await patient.create()
-    return doc
+    try:
+        patient.created = datetime.datetime.now()
+        patient.updated=datetime.datetime.now()
+        ts = datetime.datetime.now().timestamp()
+        ts = round(ts)
+        patient.Id ="Pat"+str(ts)
+        doc = await patient.create()
+        return doc
+    except:
+        return False
 
 async def findPatientbyId(Id)->Patient:
     try:
@@ -40,7 +43,7 @@ async def UpdatePatient(id,data:dict)->Union[bool, Patient]:
             field: value for field, value in des_body.items()
         }}
         patient = await patient_collection.get(id)
-        print(patient)
+        print(update_query)
         if patient:
             await patient.update(update_query)
             return patient
@@ -48,3 +51,16 @@ async def UpdatePatient(id,data:dict)->Union[bool, Patient]:
             return False
     except:
         return False
+
+async def UploadRx(file:File,id:PydanticObjectId)->Union[bool,Patient]:
+    try:
+        FilePath = "./Uploaded Rx/"
+        filename = file.filename 
+        patient = await patient_collection.get(id)
+        file_content = await file.read() 
+        # contents = file.file.read()
+        with open(FilePath+patient.Id+".pdf",'wb') as out_file:
+            out_file.write(file_content )
+        return filename
+    except:
+        return "Unable to Upload File in MongoDb"

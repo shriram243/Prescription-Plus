@@ -7,21 +7,21 @@ from Constants import constants as const
 from pydantic import BaseModel, EmailStr
 
 class AddressDetails(BaseModel):
-    locality:str
-    city:str
-    pincode:int
-    state:str
+    locality:Optional[str]
+    city:Optional[str]
+    pincode:Optional[int]
+    state:Optional[str]
 
 class Patient(Document):
     firstname: str
     lastname:Optional[str]
-    email: EmailStr
+    email: Optional[EmailStr]
     mobile: str = Query(..., regex=const.PHONE_NO_REGEX)
     whatsapp:Optional[str]
     Id:Optional[str]
     address:Optional[AddressDetails]
-    sex:str
-    age:int
+    sex:Optional[str]
+    age:Optional[int]
     created:Optional[datetime]
     updated:Optional[datetime]
 

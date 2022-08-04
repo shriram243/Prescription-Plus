@@ -1,36 +1,38 @@
 from datetime import datetime
+from enum import unique
 from typing import Optional, Any
 
 from beanie import Document
 from fastapi import Query
 from Constants import constants as const
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, Field
 
 class AddressDetails(BaseModel):
-    locality:str
-    city:str
-    pincode:int
-    state:str
+    name:Optional[str]
+    locality:Optional[str]
+    city:Optional[str]
+    pincode:Optional[int]
+    state:Optional[str]
 
 class CouncilDetails(BaseModel):
-    state:str
-    id:str
+    state:Optional[str]
+    id:Optional[str]
 
 class Doctor(Document):
     firstname: str
     lastname:Optional[str]
-    email: EmailStr
+    email: Optional[EmailStr]
     mobile: str = Query(..., regex=const.PHONE_NO_REGEX)
-    mci: str
-    degree: str
-    signature:str
+    mci: Optional[str]
+    degree: Optional[str]
+    signature:Optional[str]
     Id:Optional[str]
     council:Optional[CouncilDetails]
-    visitingCard:str
+    visitingCard:Optional[str]
     documents:Optional[list[str]]
     address:Optional[AddressDetails]
-    sex:str
-    age:int
+    sex:Optional[str]
+    age:Optional[int]
     created:Optional[datetime]
     updated:Optional[datetime]
 

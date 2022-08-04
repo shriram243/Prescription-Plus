@@ -20,7 +20,7 @@ class Settings(BaseSettings):
 
     class Config:
         env_file = ".env.dev"
-        orm_mode = True
+        orm_mode = False
 
 
 async def initiate_database():
