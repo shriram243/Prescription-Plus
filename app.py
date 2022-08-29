@@ -1,6 +1,6 @@
 import imp
 from fastapi import FastAPI, Depends
-
+from fastapi.middleware.cors import CORSMiddleware
 from auth.jwt_bearer import JWTBearer
 from config.config import initiate_database
 from Routes.AdminRoute import router as AdminRouter
@@ -25,6 +25,14 @@ async def start_database():
 async def read_root():
     return {"message": "Welcome to this fantastic app."}
 
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 app.include_router(AdminRouter, tags=["Administrator"], prefix="/admin")
 app.include_router(DoctorRouter, tags=["Administrator"], prefix="/doctor")
