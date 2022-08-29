@@ -54,7 +54,7 @@ async def UpdatePatient(id,data:dict)->Union[bool, Patient]:
 
 async def UploadRx(file:File,id:PydanticObjectId)->Union[bool,Patient]:
     try:
-        FilePath = "./Uploaded Rx/"
+        FilePath = "./Uploaded Rx/{id}"
         filename = file.filename 
         patient = await patient_collection.get(id)
         file_content = await file.read() 
