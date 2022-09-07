@@ -10,7 +10,9 @@ router = APIRouter()
 
 @router.post("/addPatient", response_description="Patient data added into the database", response_model=Response)
 async def addPatientRoute(patient: Patient= Body(...)):
+    print(patient)
     new_patient = await addPatient(patient)
+    print("patient added"+"-"*80)
     if new_patient:
         return {
             "status_code": 200,

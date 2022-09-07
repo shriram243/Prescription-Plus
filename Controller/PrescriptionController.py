@@ -104,6 +104,8 @@ async def generateRxPdf(_id: PydanticObjectId) -> Prescription:
     doctor_address_locality = data.doctor_details.address.locality
     doctor_address_city = data.doctor_details.address.city
     doctor_address_pincode = data.doctor_details.address.pincode
+    if doctor_address_pincode == 0:
+        doctor_address_pincode = ''
     doctor_address_state = data.doctor_details.address.state
     doctor_degree = data.doctor_details.degree
 
@@ -116,6 +118,8 @@ async def generateRxPdf(_id: PydanticObjectId) -> Prescription:
     patient_address_locality = data.patient_details.address.locality
     patient_address_city = data.patient_details.address.city
     patient_address_pincode = data.patient_details.address.pincode
+    if patient_address_pincode == 0:
+        patient_address_pincode = ''
     patient_address_state = data.patient_details.address.state
     patient_age = data.patient_details.age
     patient_sex = data.patient_details.sex
@@ -186,7 +190,7 @@ async def generateRxPdf(_id: PydanticObjectId) -> Prescription:
     para = Paragraph("Address: {}".format(
         doctor_address_locality), styles["rightside"])
     flowables.append(para)
-    para = Paragraph("{}, {} {}".format(doctor_address_city,
+    para = Paragraph("{} {} {}".format(doctor_address_city,
                      doctor_address_state, doctor_address_pincode), styles["rightside"])
     flowables.append(para)
     para = Paragraph("Contact: {}".format(doctor_num), styles["rightside"])
@@ -204,7 +208,7 @@ async def generateRxPdf(_id: PydanticObjectId) -> Prescription:
     para = Paragraph("Address: {}".format(
         patient_address_locality), styles["leftside"])
     flowables.append(para)
-    para = Paragraph("{}, {} {}".format(patient_address_city,
+    para = Paragraph("{} {} {}".format(patient_address_city,
                      patient_address_state, patient_address_pincode), styles["leftside"])
     flowables.append(para)
     para = Paragraph("Contact: {}".format(patient_num), styles["leftside"])
