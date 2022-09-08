@@ -165,19 +165,18 @@ async def sympipe(data: Optional[str]):
             "data": False
         }
 
-
 @router.get('/labtest',response_model = Response)
 async def labTest(data: Optional[str]):
     try:
         payload = {}
         body = {
-            "size": 5,
+            "size": 10,
             "query": {
                 "bool": {
                     "should": [
                         {
                             "match_phrase_prefix": {
-                                "SHORTNAME": {
+                                "term": {
                                     "query": data,
                                     "max_expansions": 10
                                 }
@@ -198,7 +197,7 @@ async def labTest(data: Optional[str]):
                 }
             }
         }
-        url = "https://127.0.0.1:9200/loinc/_search/"
+        url = "https://127.0.0.1:9200/labtest*/_search/"
         response = requests.request("GET", url, json=body, data=payload,
                                     verify=False, auth=HTTPBasicAuth('elastic', key))
         res = json.loads(response.content)
@@ -207,8 +206,7 @@ async def labTest(data: Optional[str]):
         result = dict()
         i = 0
         for values in res:
-            result[i] = {"Name": values['_source']['SHORTNAME'], "Common Name": values['_source']
-                        ['LONG_COMMON_NAME'], "loinc_num": values['_source']['LOINC_NUM']}
+            result[i] = {"term": values['_source']['term']}
             i = i+1
         print("-----------result----------", result)
         return {
