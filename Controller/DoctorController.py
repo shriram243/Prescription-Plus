@@ -12,6 +12,7 @@ doctor_collection = Doctor
 
 async def addDoctor(doctor: Doctor) -> Doctor:
     try:
+        print(doctor)
         doctor.created = datetime.datetime.now()
         doctor.updated=datetime.datetime.now()
         ts = datetime.datetime.now().timestamp()

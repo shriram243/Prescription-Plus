@@ -34,7 +34,7 @@ class PatientDetails(BaseModel):
     mobile:str = Query(..., regex=const.PHONE_NO_REGEX)
     address:Optional[AddressDetails]
     sex:Optional[str]
-    age:int
+    age:Optional[int]
 
 class ComplaintsDetails(BaseModel):
     term:str

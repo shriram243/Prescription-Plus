@@ -9,8 +9,8 @@ from Models.Doctor import Response
 
 router = APIRouter()
 
-key= '=5g=B1PpqLHzSakQRX1U'
-# key = 'VJ4d6j6QsnOXRGJMNQ2Q'
+# key= '=5g=B1PpqLHzSakQRX1U'
+key = 'VJ4d6j6QsnOXRGJMNQ2Q'
 
 
 @router.get("/medicine/",response_model = Response)
@@ -66,7 +66,9 @@ async def medpipe(data: Optional[str],):
         response = requests.request("GET", url, json=body, data=payload,
                                     verify=False, auth=HTTPBasicAuth('elastic', key))
         res = json.loads(response.content)
+        # print(res)
         res = res['hits']['hits']
+      
         result = dict()
         i = 0
         for values in res:

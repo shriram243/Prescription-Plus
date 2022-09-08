@@ -9,14 +9,14 @@ from pydantic import BaseModel, EmailStr, Field
 
 class AddressDetails(BaseModel):
     name:Optional[str]
-    locality:str
-    city:str
-    pincode:int
-    state:str
+    locality:Optional[str]
+    city:Optional[str]
+    pincode:Optional[int]
+    state:Optional[str]
 
 class CouncilDetails(BaseModel):
-    state:str
-    id:str
+    state:Optional[str]
+    id:Optional[str]
 
 class Doctor(Document):
     firstname: str

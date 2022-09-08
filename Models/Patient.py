@@ -7,10 +7,10 @@ from Constants import constants as const
 from pydantic import BaseModel, EmailStr
 
 class AddressDetails(BaseModel):
-    locality:str
-    city:str
-    pincode:int
-    state:str
+    locality:Optional[str]
+    city:Optional[str]
+    pincode:Optional[int]
+    state:Optional[str]
 
 class Patient(Document):
     firstname: str
